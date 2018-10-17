@@ -1,0 +1,7 @@
+{
+  "name": "comerce_front",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
