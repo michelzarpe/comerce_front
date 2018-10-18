@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, IonicPage, MenuController } from 'ionic-angular';
+import { CredencialDTO } from '../../models/credencial.dto';
+
 
 @IonicPage()
 @Component({
@@ -7,6 +9,8 @@ import { NavController, IonicPage, MenuController } from 'ionic-angular';
   templateUrl: 'home.html'
 })
 export class HomePage {
+
+    creds: CredencialDTO={email:"",senha:""};
 
   // se tu quiser injetar alguma variavel é só colocar no construtor da classe
   constructor(public navCtrl: NavController, public menu: MenuController) {
@@ -19,6 +23,7 @@ export class HomePage {
     //this.navCtrl.push('CategoriasPage');
   
     //setRoot -> nao empilha as paginas
+    console.log(this.creds);
     this.navCtrl.setRoot('CategoriasPage');
   }
 

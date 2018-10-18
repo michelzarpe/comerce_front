@@ -5,12 +5,14 @@
 
     <form>
       <ion-item>
-        <ion-input type="text" placeholder="Username"></ion-input>
+        <ion-input type="text" [(ngModel)]="creds.email" name ="email" placeholder="Username"></ion-input>
       </ion-item>
   
       <ion-item>
-        <ion-input type="password" placeholder="Password"></ion-input>
+        <ion-input type="password" [(ngModel)]="creds.senha" name="senha" placeholder="Password"></ion-input>
       </ion-item>
+
+
       <button ion-button color="blue" round block (click)="login()">Entrar</button>
     </form>
     <button ion-button color="blue" round block outline>Registrar</button>
