@@ -24,8 +24,8 @@ export class HomePage {
     //this.navCtrl.push('CategoriasPage');
     //setRoot -> nao empilha as paginas
 
-      this.auth.authenticate(this.creds).subscribe(response=>{
-        console.log(response.headers.get('Authorization'));
+        this.auth.authenticate(this.creds).subscribe(response=>{
+        this.auth.successfullLogin(response.headers.get("Authorization"));
         this.navCtrl.setRoot('CategoriasPage');
       }, error =>{})
      
@@ -39,6 +39,7 @@ export class HomePage {
   ionViewDidLeave(){
     this.menu.swipeEnable(true);
   }
+
 
 
 }
