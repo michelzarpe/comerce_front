@@ -6,7 +6,7 @@ import { STORAGE_KEYS } from "../config/sotrage_keys.config";
 @Injectable()
 export class StorageService{
 
-    //retorna o usuário logado
+    //retorna o usuário logado que foi gravado no localStorage (apartir do HTML5)
     getLocalUser() : LocalUser{
         let usr = localStorage.getItem(STORAGE_KEYS.localUser);
             if(usr==null){
