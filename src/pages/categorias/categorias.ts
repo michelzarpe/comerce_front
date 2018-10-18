@@ -24,7 +24,7 @@ export class CategoriasPage {
     this.categoriaService.findAll()
     // função anonima ou arrow function
     .subscribe(response =>{this.items=response}, 
-               error =>{console.log(error)});
+               error =>{});// o interceptor está demonstrando os erros agora
     //ou pode ser dessa forma a chamada de funcao
     //.subscribe(this.f);
   }
