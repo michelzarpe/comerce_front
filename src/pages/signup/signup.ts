@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { CidadeService } from '../../services/domain/cidade.service';
+import { EstadoService } from '../../services/domain/estado.service';
+import { CidadeDTO } from '../../models/cidade.dto';
+import { EstadoDTO } from '../../models/estado.dto';
 
 
 @IonicPage()
@@ -9,12 +13,14 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   templateUrl: 'signup.html',
 })
 export class SignupPage {
+  cidades: CidadeDTO[];
+  estados: EstadoDTO[];
 
   formGroup: FormGroup;
   //instancia o formGroup com o formBuilder.group
   // dentro do .group cria objeto colocando as informações que tem no html, no atribudo name das tags.. 
   //nome:['sempre o que tu quer que apareca na inicializacao',[regras de validação para o campo]]
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public cidadeService: CidadeService, public estadoService: EstadoService) {
     this.formGroup = this.formBuilder.group({
           nome:['Joaquim Silva',[Validators.required,Validators.minLength(5),Validators.maxLength(120)]],
           email:['joaquim@gmail.com',[Validators.required,Validators.email]],
@@ -34,8 +40,24 @@ export class SignupPage {
     });
 
   }
-
-  signupUser(){
-    console.log("Enviou o formulário");
+  ionViewDidLoad(){
+    this.estadoService.findAll().subscribe(response=>{
+      this.estados=response;
+      this.formGroup.controls.estadoId.setValue(this.estados[0].id);
+      this.updateCidades();
+    },
+    error=>{});
   }
+
+  updateCidades(){
+    let estado_id = this.formGroup.value.estadoId;
+    this.cidadeService.findAll(estado_id).subscribe(respose =>{
+      this.cidades = respose;
+      this.formGroup.controls.cidadeId.setValue(null);
+    },
+    error=>{});
+  }
+
+
+
 }
