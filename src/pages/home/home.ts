@@ -31,15 +31,21 @@ export class HomePage {
      
   }
 
-
+//Evento de ciclo de vida da tela, palavra tem que ser exatamente igual a documentação
   ionViewWillEnter(){
     this.menu.swipeEnable(false);
   }
-  
+  //Evento de ciclo de vida da tela, palavra tem que ser exatamente igual a documentação
   ionViewDidLeave(){
     this.menu.swipeEnable(true);
   }
-
-
+//Evento de ciclo de vida da tela, palavra tem que ser exatamente igual a documentação
+//chamar o refreshtoken se der certo armazena no local storage o token e ai eu passo para pagina de categoria.. caso tenha expirado o token ele vai pedir para fazer login novamente
+  ionViewDidEnter(){
+      this.auth.refreshToken().subscribe(response=>{
+      this.auth.successfullLogin(response.headers.get("Authorization"));
+      this.navCtrl.setRoot('CategoriasPage');
+    }, error =>{})
+  }
 
 }

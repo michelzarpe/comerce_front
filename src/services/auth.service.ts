@@ -22,14 +22,10 @@ export class AuthService {
         return this.http.post(`${API_CONFIG.baseUrl}/login`,creds,{observe: 'response',responseType:'text'});
     }
 
-
-
-
-     successfullLogin(authorizationValue: string){
+    successfullLogin(authorizationValue: string){
         let tok = authorizationValue.substring(7);
         //criando objeto LocalUser para guardar só o token
-        let user : LocalUser={token:tok,
-                              email:this.jwtHelper.decodeToken(tok).sub};
+        let user : LocalUser={token:tok,email:this.jwtHelper.decodeToken(tok).sub};
         this.storageService.setLocalUser(user);
     }
     
@@ -37,5 +33,9 @@ export class AuthService {
         this.storageService.setLocalUser(null);
     }
 
+    refreshToken(){
+        // o token é enviado automaticamente na requisicao pelo interceptor, por isso ele nao aparece aqui nessa linha de código
+        return this.http.post(`${API_CONFIG.baseUrl}/auth/refresh_token`,{},{observe: 'response',responseType:'text'});
+    }
 
 }
