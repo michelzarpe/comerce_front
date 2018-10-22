@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CidadeService } from '../../services/domain/cidade.service';
 import { EstadoService } from '../../services/domain/estado.service';
 import { CidadeDTO } from '../../models/cidade.dto';
 import { EstadoDTO } from '../../models/estado.dto';
+import { ClienteService } from '../../services/domain/cliente.service';
 
 
 @IonicPage()
@@ -20,12 +21,18 @@ export class SignupPage {
   //instancia o formGroup com o formBuilder.group
   // dentro do .group cria objeto colocando as informações que tem no html, no atribudo name das tags.. 
   //nome:['sempre o que tu quer que apareca na inicializacao',[regras de validação para o campo]]
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public cidadeService: CidadeService, public estadoService: EstadoService) {
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams,
+              public formBuilder: FormBuilder, 
+              public cidadeService: CidadeService,
+              public clienteService: ClienteService, 
+              public estadoService: EstadoService, 
+              public alertController: AlertController) {
     this.formGroup = this.formBuilder.group({
           nome:['Joaquim Silva',[Validators.required,Validators.minLength(5),Validators.maxLength(120)]],
           email:['joaquim@gmail.com',[Validators.required,Validators.email]],
-          tipo:['2',[Validators.required]],
-          cpfOuCnpj:['05626788913',[Validators.required,Validators.minLength(11),Validators.maxLength(14)]],
+          tipo:['1',[Validators.required]],
+          cpfOuCnpj:['34645470000',[Validators.required,Validators.minLength(11),Validators.maxLength(14)]],
           senha:['123',[Validators.required]],
           logradouro:['Rua viva',[Validators.required]],
           numero:['98',[Validators.required]],
@@ -58,6 +65,23 @@ export class SignupPage {
     error=>{});
   }
 
+  signupUser(){
+      this.clienteService.insert(this.formGroup.value)
+          .subscribe(response =>{this.showInsertOK()},error=>{});
+
+  }
+  
+  showInsertOK(){
+    let alert = this.alertController.create({
+        title: 'Feito!',
+        message: 'Cadastro Realizado com sucesso',
+        enableBackdropDismiss: false,
+        buttons: [{text:'Ok', handler: ()=>{
+          this.navCtrl.pop(); // como a tela de cadastro está empilhada sobre a tela de login, se der tudo certo eu desempilho a tela
+        }}]
+    });
+    alert.present(); //apresenta o alert
+}
 
 
 }
