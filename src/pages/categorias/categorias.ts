@@ -29,8 +29,11 @@ export class CategoriasPage {
     //.subscribe(this.f);
   }
 
-   public f(response){
-     console.log(response)
-   }
+
+  showProdutos(){
+    this.navCtrl.push('ProdutosPage');
+  }
+
+
 
 }
