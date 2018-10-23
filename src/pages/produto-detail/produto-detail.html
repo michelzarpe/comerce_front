@@ -16,5 +16,5 @@
       <p>{{item?.preco | currency}}</p>
       </ion-card-content>
   </ion-card>
-  <button ion-button block outline>Add carrinho</button>
+  <button ion-button block outline (click)="addToCart(item)">Add carrinho</button>
 </ion-content>
