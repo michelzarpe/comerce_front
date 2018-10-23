@@ -22,7 +22,7 @@ export class ProfilePage {
     let localUser = this.storageService.getLocalUser();
     
     if(localUser && localUser.email){
-      this.clienteService.findByEmail(localUser.email).subscribe(response =>{this.cliente=response, this.getImageIfExists();}, 
+      this.clienteService.findByEmail(localUser.email).subscribe(response =>{this.cliente=response as ClienteDTO, this.getImageIfExists();}, 
                                                                  error =>{
                                                                    if(error.status==403){// se der o erro 403 volta para o home, que é o login
                                                                      this.navCtrl.setRoot('HomePage');

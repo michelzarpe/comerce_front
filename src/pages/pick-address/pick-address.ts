@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { EnderecoDTO } from '../../models/endereco.dto';
+import { StorageService } from '../../services/storage.service';
+import { ClienteService } from '../../services/domain/cliente.service';
 
 @IonicPage()
 @Component({
@@ -11,13 +13,22 @@ export class PickAddressPage {
 
   items : EnderecoDTO[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storageService: StorageService, public clienteService: ClienteService) {
   }
 
   ionViewDidLoad() {
-    this.items = [
-      {id:"1", logradouro: "asdfadfasf", numero:"192", complemento:"SSA", bairro: "Santa Monica", cep:"948932342", cidade:{ id:"1", nome:"Uberlandia", estado: {id:"1",nome:"Minas Gerais"}}},
-      {id:"2", logradouro: "AFASDFASD", numero:"222", complemento:"FSSDLFKS", bairro: "Santa lUCIA", cep:"3422342", cidade:{ id:"3", nome:"São Paulo", estado: {id:"2",nome:"São Paulo"}}}]
-  }
+    let localUser = this.storageService.getLocalUser();
+    
+    if(localUser && localUser.email){
+      this.clienteService.findByEmail(localUser.email).subscribe(response =>{
+        this.items = response['enderecos'];
+      }, error =>{
+          if(error.status==403){// se der o erro 403 volta para o home, que é o login
+            this.navCtrl.setRoot('HomePage');
+          }});
+    }else{//se der algum problema com o token volta para pagina inicial
+      this.navCtrl.setRoot('HomePage');
+    }
+    }
 
 }
