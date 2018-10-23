@@ -29,9 +29,12 @@ export class ProdutosPage {
     for (let index = 0; index < this.items.length; index++) {
           this.produtoService.getSmallImageFromBucket(this.items[index].id).subscribe(response=>{
             this.items[index].imageUrl = `${API_CONFIG.bucketBaseUrl}/prod${this.items[index].id}-small.jpg`;
-            console.log(this.items[index].imageUrl);
           },error=>{})
     }
+  }
+
+  showDetail(produto_id: string){
+    this.navCtrl.push('ProdutoDetailPage',{produto_id:produto_id});
   }
 
 }
