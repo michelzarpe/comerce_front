@@ -22,19 +22,7 @@ export class ProfilePage {
   }
 
   ionViewDidLoad() {
-    let localUser = this.storageService.getLocalUser();
-    
-    if(localUser && localUser.email){
-      this.clienteService.findByEmail(localUser.email).subscribe(response =>{this.cliente=response as ClienteDTO, this.getImageIfExists();}, 
-                                                                 error =>{
-                                                                   if(error.status==403){// se der o erro 403 volta para o home, que é o login
-                                                                     this.navCtrl.setRoot('HomePage');
-                                                                   }
-                                                                 });
-     
-    }else{//se der algum problema com o token volta para pagina inicial
-      this.navCtrl.setRoot('HomePage');
-    }
+      this.loadData();
   }
   
   getImageIfExists(){
@@ -58,6 +46,33 @@ getCameraPicture(){
   }, (err) => {
    // Handle error
   });
+}
+
+sendPicture(){
+  this.clienteService.uploadPicture(this.picture).subscribe(response=>{
+    this.picture=null;
+    this.loadData();
+  },error=>{});
+}
+
+cancel(){
+  this.picture = null;
+}
+
+loadData(){
+  let localUser = this.storageService.getLocalUser();
+    
+  if(localUser && localUser.email){
+    this.clienteService.findByEmail(localUser.email).subscribe(response =>{this.cliente=response as ClienteDTO, this.getImageIfExists();}, 
+                                                               error =>{
+                                                                 if(error.status==403){// se der o erro 403 volta para o home, que é o login
+                                                                   this.navCtrl.setRoot('HomePage');
+                                                                 }
+                                                               });
+   
+  }else{//se der algum problema com o token volta para pagina inicial
+    this.navCtrl.setRoot('HomePage');
+  }
 }
 
 }
