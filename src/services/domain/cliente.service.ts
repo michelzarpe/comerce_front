@@ -44,4 +44,10 @@ export class ClienteService {
         return this.http.post(`${API_CONFIG.baseUrl}/clientes/picture`,formData,{observe:'response',responseType:'text'});
     }
 
+    uploadPicture1(picture:string){
+        let pictureBlob = this.imagUtilService.dataUriToBlob1(picture);
+        let formData : FormData = new FormData();
+        formData.set('file',pictureBlob,'file.png');
+        return this.http.post(`${API_CONFIG.baseUrl}/clientes/picture`,formData,{observe:'response',responseType:'text'});
+    }
 }

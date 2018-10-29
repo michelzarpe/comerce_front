@@ -3,7 +3,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import {HttpClientModule} from '@angular/common/http'
 import { MyApp } from './app.component';
-
+import { Camera } from '@ionic-native/camera'
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { CategoriaService } from '../services/domain/categoria.service';
@@ -41,6 +41,7 @@ import { ImageUtilService } from '../services/domain/imageUtil.service';
     ErrorInterceptorProvier,
     ProdutoService,
     CartService,
+    Camera,
     ImageUtilService
   ]
 })

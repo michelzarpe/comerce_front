@@ -41,8 +41,7 @@ export class ProdutosPage {
   }
 
   presentLoadingDefault() {
-      let loading = this.loadingController.create({content: 
-        'Aguarde!'});
+      let loading = this.loadingController.create({content:'Aguarde!'});
       loading.present();
     return loading;
 
